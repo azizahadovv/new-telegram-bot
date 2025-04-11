@@ -1,0 +1,22 @@
+{
+  "name": "node-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "telegraf": "^4.16.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
