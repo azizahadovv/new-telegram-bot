@@ -28,7 +28,8 @@ const sendToJsonServer = async (data) => {
                     estimated_monthly_salary: item.estimated_monthly_salary,
                     withholding: item.withholding,
                     monthly_salary: item.monthly_salary,
-                    description: item.description
+                    description: item.description,
+                    chat_id: item.chat_id ? item.chat_id : 100000000 ,
                 })
             });
 
@@ -70,7 +71,12 @@ bot.on('document', async (ctx) => {
         fs.writeFileSync(filePath, Buffer.from(buffer));
 
         const workbook = XLSX.readFile(filePath);
+        
+        // daata
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+        // daata
+
+
         const jsonData = JSON.stringify(data, null, 2);
 
         if (ALL_ADMINS.includes(userId)) {
@@ -84,7 +90,7 @@ bot.on('document', async (ctx) => {
                 await ctx.replyWithHTML(`<pre>${jsonData}</pre>`);
             }
 
-            // 🔥 json-serverga yuborish
+            // json-serverga yuborish
             await sendToJsonServer(data);
 
             // Userlarga xabar yuborish + JSON yuborish
@@ -93,11 +99,13 @@ bot.on('document', async (ctx) => {
                     try {
                         await ctx.telegram.sendMessage(user, "Admin tomonidan fayl yuklandi. Mana ma'lumotlar:");
                         const userJson = JSON.stringify(data, null, 2);
+                        console.log(userJson);
                         if (userJson.length > 4000) {
                             fs.writeFileSync('userData.json', userJson);
                             await ctx.telegram.sendDocument(user, { source: 'userData.json' });
                             fs.unlinkSync('userData.json');
                         } else {
+                            
                             await ctx.telegram.sendMessage(user, `<pre>${userJson}</pre>`, { parse_mode: 'HTML' });
                         }
                     } catch (_) { }
