@@ -5,7 +5,8 @@
   "type": "",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "server": "json-server --watch db.json --port 3000"
   },
   "keywords": [],
   "author": "",
